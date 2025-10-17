@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "blog-backend"
+version = "0.1.0"
+description = "Backend for the 17CFP Blog System"
+authors = ["Your Name <you@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.109.2" # ★★★ バージョンを更新 ★★★
+uvicorn = {extras = ["standard"], version = "^0.23.2"}
+sqlalchemy = "^2.0.22"
+psycopg2-binary = "^2.9.9"
+pydantic = {extras = ["email"], version = "^2.4.2"}
+pydantic-settings = "^2.2.0" # ★★★ バージョンを更新 ★★★
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+python-multipart = "^0.0.6"
+bcrypt = "^4.0.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

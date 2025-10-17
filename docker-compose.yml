@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  # フロントエンド (React)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: blog-frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    environment:
+      - CHOKIDAR_USEPOLLING=true # ホットリロードを有効化
+    depends_on:
+      - backend
+    networks:
+      - blog-network
+
+  # バックエンド (FastAPI)
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: blog-backend
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env # .env ファイルから環境変数を読み込む
+    depends_on:
+      - db
+    networks:
+      - blog-network
+
+  # データベース (PostgreSQL)
+  db:
+    image: postgres:15-alpine
+    container_name: blog-db
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env # .env ファイルから環境変数を読み込む
+    networks:
+      - blog-network
+
+# データ永続化のための名前付きボリューム
+volumes:
+  db-data:
+
+# コンテナ間通信のためのネットワーク
+networks:
+  blog-network:
+    driver: bridge

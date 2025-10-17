@@ -1,0 +1,26 @@
+# Pythonの公式イメージをベースにする
+FROM python:3.10-slim
+
+# 作業ディレクトリを設定
+WORKDIR /app
+
+# 依存関係管理ツールPoetryをインストール
+RUN pip install poetry
+
+# poetryの設定ファイルのみを先にコピー
+# poetry.lockはコピーせず、コンテナ内で生成する
+COPY ./pyproject.toml /app/
+
+# ★★★ 変更点 ★★★
+# pyproject.toml を基に、コンテナ内で poetry.lock ファイルを生成する
+RUN poetry lock
+
+# 生成されたロックファイルに基づき、依存関係をインストール
+RUN poetry install --no-root
+
+# アプリケーションのソースコードをコピー
+COPY . /app
+
+# FastAPIサーバーを起動するコマンド
+# --host 0.0.0.0 でコンテナ外からのアクセスを許可
+CMD ["poetry", "run", "uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
