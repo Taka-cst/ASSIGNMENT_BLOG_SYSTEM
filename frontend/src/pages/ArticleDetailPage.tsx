@@ -97,7 +97,7 @@ const ArticleDetailPage = () => {
         <h1 className="text-4xl font-extrabold mb-4 text-gray-900">{article.title}</h1>
         <div className="text-sm text-gray-500 mb-6">
           <span>投稿者: {article.author.username}</span> | 
-          <span> 投稿日: {dayjs(article.created_at).format('YYYY/MM/DD')}</span>
+          <span> 投稿日: {dayjs.utc(article.created_at).tz('Asia/Tokyo').format('YYYY/MM/DD')}</span>
         </div>
         
         {isAuthor && (
@@ -128,7 +128,7 @@ const ArticleDetailPage = () => {
             <div key={comment.id} className="bg-white p-4 rounded-lg shadow">
               <p className="text-gray-700">{comment.content}</p>
               <p className="text-xs text-gray-500 mt-2">
-                {comment.author.username} - {dayjs(comment.created_at).format('YYYY/MM/DD HH:mm')}
+                {comment.author.username} - {dayjs.utc(comment.created_at).tz('Asia/Tokyo').format('YYYY/MM/DD HH:mm')}
               </p>
             </div>
           ))}

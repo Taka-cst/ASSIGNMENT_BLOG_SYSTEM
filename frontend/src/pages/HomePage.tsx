@@ -12,7 +12,7 @@ const ArticleCard = ({ article }: { article: Article }) => {
         <h3 className="text-xl font-semibold text-blue-700">{article.title}</h3>
         <p className="text-gray-600 mt-2">投稿者: {article.author.username}</p>
         <p className="text-gray-400 text-sm mt-1">
-          投稿日: {dayjs(article.created_at).format('YYYY/MM/DD HH:mm')}
+          投稿日: {dayjs.utc(article.created_at).tz('Asia/Tokyo').format('YYYY/MM/DD HH:mm')}
         </p>
       </div>
     </Link>
