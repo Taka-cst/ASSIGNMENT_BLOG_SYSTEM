@@ -154,3 +154,9 @@ docker-compose down
     ├── Dockerfile        # フロントエンド用のコンテナをビルドするための設計図
     └── src/              # Reactアプリケーションのソースコード
 ```
+
+# 9. SBOM
+本プロジェクトのソフトウェア部品表 (SBOM: Software Bill of Materials) は、以下の通りです。
+
+- [フロントエンド](frontend/syft-front.json)
+- [バックエンド](backend/syft-back.json)
